@@ -1,3 +1,2 @@
-Çalıştırmak için:
-Terminal -> python scoref.py [MaçKodları] \n
-install python-tk python-pygame
+{apt install python-tk python-pygame}
+Terminal -> python scoref.py [MaçKodları]
