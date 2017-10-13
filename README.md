@@ -1,1 +1,2 @@
-Terminal: python scoref.py [MAçKodları]
+Çalıştırmak için:
+Terminal -> python scoref.py [MaçKodları]
