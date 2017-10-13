@@ -191,7 +191,7 @@ def program():
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(0)
+windows.overrideredirect(1)
 frame1 = Frame(padx=10, pady=10, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'] )
