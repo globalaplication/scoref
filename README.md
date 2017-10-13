@@ -1,1 +1,1 @@
-# scoref
+Terminal: python scoref.py [MAçKodları]
