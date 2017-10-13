@@ -57,10 +57,10 @@ def program():
                 for SCORE in GOALS:
                     #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['PIN'] is None and SCORE['TS'] is 1:
-                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE[2]:
+                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2:
                             HG = HG + str(SCORE['P']+':'+SCORE['M']+',')
                     if SCORE['PIN'] is None and SCORE['TS'] is 2:
-                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE[2]:
+                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2:
                             AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
                             
             if len(T) is 0: #Başlamayan maçlar
