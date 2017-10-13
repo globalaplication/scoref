@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-
 from Tkinter import *
 import time, os, pygame, httplib, sys, msql, datetime, json
 os.system('rm /var/tmp/database.msql')
@@ -8,7 +7,6 @@ try:
   import urllib.request as url
 except ImportError:
     import urllib
-    
 msql.connect('/var/tmp/database.msql')
 msql.execute('CREATE TABLE canlisonuclar (ID:id, Code:Int, DT:Text, ATTR:Text, HTTR:Text, AMS:Int, HMS:Int, AIY:Int, HIY:Int, STL:Text, STATE:Text, AG:Text, HG:Text)')
     
@@ -23,10 +21,6 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 8', 'Maç Sonucu':'red',
          'Devre Arası':'yellow', 'Başlamadı':'gray', 'IYLABEL':'yellow', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange',
          'ATTR':'gray', 'HTTR':'gray'}
-def hide(state):
-    if int(state) is 1: windows.state("withdrawn")
-    elif int(state) is 0: windows.state('normal')
-    return int(state)
 def goal():
     pygame.init()
     pygame.mixer.music.load('golsesi.ogg')
@@ -68,7 +62,7 @@ def program():
                     if SCORE['PIN'] is None and SCORE['TS'] is 2:
                         if SCORE['T'] is 1 or SCORE['T'] is 4:
                             AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
-        
+                            
             if len(T) is 0: #Başlamayan maçlar
                 AIY = -1
                 HIY = -1
@@ -106,7 +100,6 @@ def program():
                         if  db_STL != STL:
                             msql.UPDATE_(id, 'canlisonuclar', 'STL', STL)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'STL')
-                            print(Code, '-', 'STL', id, db_STL, STL)
                         if  db_AIY is not AIY:
                             msql.UPDATE_(id, 'canlisonuclar', 'AIY', AIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AIY')
@@ -126,7 +119,6 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-                            print(Code, '-', 'HMS', id, db_HMS, HMS)
                             
     Label(frame2,text='nesine.com',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
@@ -197,8 +189,6 @@ def program():
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 windows = Tk()
-screen_width, screen_height = windows.winfo_screenwidth(), windows.winfo_screenheight()
-center_top = [str(screen_width/2), 0, windows.winfo_width()] 
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
 windows.overrideredirect(0)
@@ -208,4 +198,3 @@ frame2 = Frame(padx=1, pady=2, bg=color['background'] )
 frame2.pack()
 program() #START
 windows.mainloop()
-
