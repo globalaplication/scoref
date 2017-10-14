@@ -66,10 +66,10 @@ def program():
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
                     #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
-                    if SCORE['PIN'] is None and SCORE['TS'] is 1:
+                    if SCORE['TS'] is 1:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             HG = HG + str(SCORE['P']+':'+SCORE['M']+',')
-                    if SCORE['PIN'] is None and SCORE['TS'] is 2:
+                    if SCORE['TS'] is 2:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
             if len(T) is 0: #Başlamayan maçlar
@@ -105,28 +105,29 @@ def program():
                         db_DT, db_STL = msql.gets('canlisonuclar', id)[2], msql.gets('canlisonuclar', id)[9]         
                         db_ATTR, db_HTTR = msql.gets('canlisonuclar', id)[3], msql.gets('canlisonuclar', id)[4]      
                         db_AMS, db_HMS = msql.gets('canlisonuclar', id)[5], msql.gets('canlisonuclar', id)[6] 
-                        db_AIY, db_HIY = msql.gets('canlisonuclar', id)[7], msql.gets('canlisonuclar', id)[8]  
+                        db_AIY, db_HIY = msql.gets('canlisonuclar', id)[7], msql.gets('canlisonuclar', id)[8]
+                        db_AG, db_HG = msql.gets('canlisonuclar', id)[-2], msql.gets('canlisonuclar', id)[-1]
+                        if db_AG != string['AG']:
+                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG'])
+                        if db_HG != string['HG']:
+                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])
                         if  db_STL != STL:
                             windows.state("normal")
                             msql.UPDATE_(id, 'canlisonuclar', 'STL', STL)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'STL')
                         if  db_AIY is not AIY:
-                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'AIY', AIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AIY')
                             goal_=True
                         if  db_HIY is not HIY:
-                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'HIY', HIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HIY')
                             goal_=True
                         if  db_AMS is not AMS:
-                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'AMS', AMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AMS')
                             goal_=True
                         if  db_HMS is not HMS:
-                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
@@ -145,60 +146,60 @@ def program():
             truefalse_goal = msql.gets('canlisonuclar', id)[10]
             if c is 2 and enabled['Code'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
-                    Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id,column=c, sticky=W) 
+                    LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id,column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Devre Arası':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Başlamadı.':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Ertelendi':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 else:
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)  
+                    LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)  
             if c is 1 and enabled['Saat'] is 1:
-                Label(frame1,text=msql.gets('canlisonuclar', id)[2],bg=color['background'],fg=color['Saat'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                LBL_CLOCK = Label(frame1,text=msql.gets('canlisonuclar', id)[2],bg=color['background'],fg=color['Saat'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 3 and enabled['STL'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Maç Sonucu'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Maç Sonucu'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Devre Arası':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
+                    LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
                 elif msql.gets('canlisonuclar', id)[9] == 'Başlamadı.':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
+                    LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
                 elif msql.gets('canlisonuclar', id)[9] == 'Ertelendi':
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[9],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 else:
-                    Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
+                    LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
             if c is 4 and enabled['LIG'] is 1:
-                Label(frame1,text=msql.gets('canlisonuclar', id)[11],bg=color['background'],fg=color['Lig'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
+                LBL_LIG = Label(frame1,text=msql.gets('canlisonuclar', id)[11],bg=color['background'],fg=color['Lig'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
             if c is 5:
                 if truefalse_goal == 'HIY' or truefalse_goal == 'HMS':
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg=color['Goal'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    LBL_HTTR = Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg=color['Goal'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
                     beta, test = '', msql.gets('canlisonuclar', id)[-1].split(',')[0:-1]
                     for minute in test:
                         beta = beta +' '+ minute.split(':')[1]
                     if len(beta) < 2:
-                        Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                        LBL_HTTR = Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     else:
-                        Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
+                        LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 6:
-                Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_HMS = Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 7:
                 Label(frame1, text= '-',   bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 8:
-                Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
+                LBL_SCORE_AMS = Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
             if c is 9:
                 if truefalse_goal == 'AIY' or truefalse_goal == 'AMS': 
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    LBL_ATTR = Label(frame1, text=msql.gets('canlisonuclar', id)[3],bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
                     beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
                     for minute in test:
                         beta = beta +' '+ minute.split(':')[1]
                     if len(beta) < 2:
-                        Label(frame1, text=msql.gets('canlisonuclar', id)[3],   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                        LBL_ATTR = Label(frame1, text=msql.gets('canlisonuclar', id)[3],bg=color['background'],fg=color['ATTR'],anchor=NW,justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     else:
-                        Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)                     
+                        LBL_ATTR = Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')'),bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)                     
             if c is 10:
                 continue
                 beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
@@ -206,33 +207,37 @@ def program():
                     beta = beta +' '+ minute.split(':')[1]
                 Label(frame1,text=beta,bg=color['background'],fg=color['GM'], anchor=NW, justify=LEFT, font=('Verdana 6')).grid(row=id, column=c, sticky=W)
             if c is 11 and enabled['IY'] is 1:
-                Label(frame1, text='  IY',bg=color['background'],fg=color['IYLABEL'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_AIY = Label(frame1, text='  IY',bg=color['background'],fg=color['IYLABEL'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 12 and enabled['IY'] is 1:
-                Label(frame1,text=msql.gets('canlisonuclar', id)[8],bg=color['background'],fg='white',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_HIY = Label(frame1,text=msql.gets('canlisonuclar', id)[8],bg=color['background'],fg='white',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 13 and enabled['IY'] is 1:
-                Label(frame1,text='-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                Label(frame1,text='-',bg=color['background'], fg='gray',anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 14 and enabled['IY'] is 1:
-                Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-        hide = Label(frame3, text=' HIDE ',bg=color['background'], fg='orange', anchor=E, justify=LEFT, 
-              font=('Verdana 6'))
-        hide.bind('<Button-1>', hide_command)
-        hide.grid(row=1, column=1, sticky=E)
-        center =Label(frame3, text=' C ',bg=color['background'], fg='gray', anchor=E, justify=LEFT, 
-              font=('Verdana 6'))
-        center.bind('<Button-1>', center_geometry)
-        center.grid(row=1, column=2, sticky=E)
-        right = Label(frame3, text=' R ',bg=color['background'], fg='gray', anchor=E, justify=LEFT, 
-              font=('Verdana 6'))
-        right.bind('<Button-1>', right_geometry)
-        right.grid(row=1, column=3, sticky=E)
-        if goal_ is True: 
-            goal()
-        windows.update()
+                LBL_SCORE_AIY = Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+            #windows.update()
+            #windows.update_idletasks()
+    hide = Label(frame3, text=' HIDE ',bg=color['background'],fg='orange', anchor=E, justify=LEFT, 
+            font=('Verdana 6'))
+    hide.bind('<Button-1>', hide_command)
+    hide.grid(row=1, column=1, sticky=E)
+    center =Label(frame3, text=' C ',bg=color['background'],fg='gray', anchor=E, justify=LEFT, 
+            font=('Verdana 6'))
+    center.bind('<Button-1>', center_geometry)
+    center.grid(row=1, column=2, sticky=E)
+    right = Label(frame3, text=' R ',bg=color['background'],fg='gray', anchor=E, justify=LEFT, 
+            font=('Verdana 6'))
+    right.bind('<Button-1>', right_geometry)
+    right.grid(row=1, column=3, sticky=E)
+    windows.update()
+    windows.update_idletasks()
+    if goal_ is True:
+        goal()
     if geometry[-1] != 'CENTER':
         windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , +30, +0))
     else:
         windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
-    windows.after(60000, program) #LOOP           
+    windows.after(60000, program) #LOOP
+                            
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 windows = Tk()
 windows.attributes('-alpha', 0.8)
@@ -246,5 +251,6 @@ frame2 = Frame(padx=1, pady=2, bg=color['background'])
 #frame2.pack()
 frame3 = Frame(padx=10, pady=10, bg=color['background'])
 frame3.pack(side=RIGHT)
+windows.update()
 program() #START
 windows.mainloop()
