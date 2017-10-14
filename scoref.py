@@ -55,10 +55,10 @@ def program():
                 for SCORE in GOALS:
                     #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['PIN'] is None and SCORE['TS'] is 1:
-                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2:
+                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             HG = HG + str(SCORE['P']+':'+SCORE['M']+',')
                     if SCORE['PIN'] is None and SCORE['TS'] is 2:
-                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2:
+                        if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
             if len(T) is 0: #Başlamayan maçlar
                 AIY = -1
@@ -93,27 +93,31 @@ def program():
                         db_DT, db_STL = msql.gets('canlisonuclar', id)[2], msql.gets('canlisonuclar', id)[9]         
                         db_ATTR, db_HTTR = msql.gets('canlisonuclar', id)[3], msql.gets('canlisonuclar', id)[4]      
                         db_AMS, db_HMS = msql.gets('canlisonuclar', id)[5], msql.gets('canlisonuclar', id)[6] 
-                        db_AIY, db_HIY = msql.gets('canlisonuclar', id)[7], msql.gets('canlisonuclar', id)[8]    
+                        db_AIY, db_HIY = msql.gets('canlisonuclar', id)[7], msql.gets('canlisonuclar', id)[8]  
                         if  db_STL != STL:
                             msql.UPDATE_(id, 'canlisonuclar', 'STL', STL)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'STL')
                         if  db_AIY is not AIY:
+                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG']) #
                             msql.UPDATE_(id, 'canlisonuclar', 'AIY', AIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AIY')
                             goal_=True
                         if  db_HIY is not HIY:
+                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG']) #
                             msql.UPDATE_(id, 'canlisonuclar', 'HIY', HIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HIY')
                             goal_=True
                         if  db_AMS is not AMS:
+                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG']) #
                             msql.UPDATE_(id, 'canlisonuclar', 'AMS', AMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AMS')
                             goal_=True
                         if  db_HMS is not HMS:
+                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])#
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-    Label(frame2,text='nesine.com',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
+    Label(frame2,text='Canlı Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
             truefalse_goal = msql.gets('canlisonuclar', id)[10]
@@ -201,7 +205,7 @@ def program():
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(1)
+windows.overrideredirect(1) #0
 frame1 = Frame(padx=10, pady=8, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'] )
