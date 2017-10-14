@@ -149,7 +149,6 @@ def program():
                 for minute in test:
                     beta = beta +' '+ minute.split(':')[1]
                 Label(frame1,text=beta,bg=color['background'],fg=color['GM'], anchor=NW, justify=LEFT, font=('Verdana 6')).grid(row=id, column=c, sticky=W)
-                
             if c is 5:
                 if truefalse_goal == 'HIY' or truefalse_goal == 'HMS':
                     Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg=color['Goal'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
