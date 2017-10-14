@@ -17,7 +17,9 @@ AIY, HIY = -1,-1
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 
          'Devre Arası':'yellow', 'Başlamadı':'gray', 'IYLABEL':'yellow', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
-         'ATTR':'gray', 'HTTR':'gray'}
+         'ATTR':'gray', 'HTTR':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
+enabled = {'Saat':1, 'Code':1, 'STL':1, 'ATTR':1, 
+           'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. 
 def goal():
     pygame.init()
     pygame.mixer.music.load('golsesi.ogg')
@@ -116,7 +118,7 @@ def program():
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
             truefalse_goal = msql.gets('canlisonuclar', id)[-1]
-            if c is 2:
+            if c is 2 and enabled['Code'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
                     Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id,column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Devre Arası':
@@ -127,9 +129,9 @@ def program():
                     Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 else:
                     Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)  
-            if c is 1:
+            if c is 1 and enabled['Saat'] is 1:
                 Label(frame1,text=msql.gets('canlisonuclar', id)[2],bg=color['background'],fg=color['Saat'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
-            if c is 3:
+            if c is 3 and enabled['STL'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
                     Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Maç Sonucu'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Devre Arası':
@@ -182,18 +184,18 @@ def program():
                 for minute in test:
                     beta = beta +' '+ minute.split(':')[1]
                 Label(frame1,text=beta,bg=color['background'],fg=color['GM'], anchor=NW, justify=LEFT, font=('Verdana 6')).grid(row=id, column=c, sticky=W)
-            if c is 11:
+            if c is 11 and enabled['IY'] is 1:
                 Label(frame1, text='  IY',bg=color['background'],fg=color['IYLABEL'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            if c is 12:
+            if c is 12 and enabled['IY'] is 1:
                 Label(frame1,text=msql.gets('canlisonuclar', id)[8],bg=color['background'],fg='white',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            if c is 13:
+            if c is 13 and enabled['IY'] is 1:
                 Label(frame1,text='-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            if c is 14:
+            if c is 14 and enabled['IY'] is 1:
                 Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
         windows.update()
         if goal_ is True: 
             goal()
-    windows.geometry(str(windows.winfo_width()) +'x'+ str(windows.winfo_height()) + '-'+str(windows.winfo_screenwidth()/2-windows.winfo_width()+200) + '+0')
+    windows.geometry(str(windows.winfo_width()) +'x'+ str(windows.winfo_height()) + '-'+str(windows.winfo_screenwidth()/2-windows.winfo_width()+250) + '+0')
     windows.after(100000, program) #LOOP
                             
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
