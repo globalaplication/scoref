@@ -117,6 +117,12 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
+    if enabled['STL'] is 0:
+        Label(frame0,text='Devre Arası',bg=color['background'],fg=color['Devre Arası'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
+        Label(frame0,text='Maç Sonucu',bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=2, sticky=W) 
+        Label(frame0,text='Oynanıyor',bg=color['background'],fg=color['Oynanıyor'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=3, sticky=W) 
+        Label(frame0,text='Başlamadı',bg=color['background'],fg=color['Başlamadı'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=4, sticky=W) 
+        
     Label(frame2,text='Canlı Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
@@ -206,6 +212,8 @@ windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
 windows.overrideredirect(1) #0
+frame0 = Frame(padx=5, pady=5, bg=color['background'] )
+frame0.pack()
 frame1 = Frame(padx=10, pady=10, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=3, bg=color['background'] )
