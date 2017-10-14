@@ -19,7 +19,7 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
          'ATTR':'gray', 'HTTR':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':1, 'ATTR':1, 
-           'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. 
+           'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY} için uygulanabilir.
 def goal():
     pygame.init()
     pygame.mixer.music.load('golsesi.ogg')
