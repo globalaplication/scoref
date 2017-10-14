@@ -145,6 +145,7 @@ def program():
                 else:
                     Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
             if c is 4:
+                continue
                 beta, test = '', msql.gets('canlisonuclar', id)[-1].split(',')[0:-1]
                 for minute in test:
                     beta = beta +' '+ minute.split(':')[1]
@@ -154,7 +155,13 @@ def program():
                     Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    beta, test = '', msql.gets('canlisonuclar', id)[-1].split(',')[0:-1]
+                    for minute in test:
+                        beta = beta +' '+ minute.split(':')[1]
+                    if len(beta) is 0:
+                        Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    else:
+                        Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 6:
                 Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 7:
@@ -166,8 +173,15 @@ def program():
                     Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg='yellow', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
+                    for minute in test:
+                        beta = beta +' '+ minute.split(':')[1]
+                    if len(beta) is 0:
+                        Label(frame1, text=msql.gets('canlisonuclar', id)[3],   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    else:
+                        Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 10:
+                continue
                 beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
                 for minute in test:
                     beta = beta +' '+ minute.split(':')[1]
@@ -187,11 +201,10 @@ def program():
     windows.after(100000, program) #LOOP
                             
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(0)
+windows.overrideredirect(1)
 frame1 = Frame(padx=10, pady=10, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'] )
