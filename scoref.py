@@ -9,14 +9,11 @@ except ImportError:
     import urllib
 msql.connect('/var/tmp/database.msql')
 msql.execute('CREATE TABLE canlisonuclar (ID:id, Code:Int, DT:Text, ATTR:Text, HTTR:Text, AMS:Int, HMS:Int, AIY:Int, HIY:Int, STL:Text, STATE:Text, AG:Text, HG:Text)')
-    
 date = str(datetime.datetime.now())[0:10].split('-')
 datenow = date[0] +'-'+ date[1] +'-'+ date[2]
 clock = str(datetime.datetime.now()).split(' ')[0:5]
-
 AMS, HMS = -1,-1
 AIY, HIY = -1,-1
-
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 8', 'Maç Sonucu':'red', 
          'Devre Arası':'yellow', 'Başlamadı':'gray', 'IYLABEL':'yellow', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange',
@@ -51,7 +48,6 @@ def program():
         GOALS, AG, HG = data['result'][OnlineIddaa]['ME'], '',''
         if len(STL) == 0 : STL = 'Oynaniyor'
         T = data['result'][OnlineIddaa]['ES']
-        minute = ''
         if str(Code) in sys.argv[1:]:
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
@@ -62,7 +58,6 @@ def program():
                     if SCORE['PIN'] is None and SCORE['TS'] is 2:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2:
                             AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
-                            
             if len(T) is 0: #Başlamayan maçlar
                 AIY = -1
                 HIY = -1
@@ -119,7 +114,6 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-                            
     Label(frame2,text='Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
@@ -199,7 +193,7 @@ def program():
             goal()
     windows.geometry(str(windows.winfo_width()) +'x'+ str(windows.winfo_height()) + '-'+str(windows.winfo_screenwidth()/2-windows.winfo_width()+200) + '+0')
     windows.after(100000, program) #LOOP
-                            
+                           
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 windows = Tk()
 windows.attributes('-alpha', 0.8)
