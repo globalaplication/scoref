@@ -15,7 +15,7 @@ clock = str(datetime.datetime.now()).split(' ')[0:5]
 AMS, HMS = -1,-1
 AIY, HIY = -1,-1
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 
-         'Devre Arası':'yellow', 'Başlamadı':'gray', 'IYLABEL':'yellow', 'background':'black',
+         'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'yellow', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
          'ATTR':'gray', 'HTTR':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':1, 'ATTR':1, 
