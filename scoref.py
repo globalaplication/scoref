@@ -14,9 +14,9 @@ datenow = date[0] +'-'+ date[1] +'-'+ date[2]
 clock = str(datetime.datetime.now()).split(' ')[0:5]
 AMS, HMS = -1,-1
 AIY, HIY = -1,-1
-color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 8', 'Maç Sonucu':'red', 
+color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 
          'Devre Arası':'yellow', 'Başlamadı':'gray', 'IYLABEL':'yellow', 'background':'black',
-         'Oynanıyor':'green', 'Saat':'white', 'GM':'orange',
+         'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
          'ATTR':'gray', 'HTTR':'gray'}
 def goal():
     pygame.init()
@@ -99,22 +99,20 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'AIY', AIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AIY')
                             goal_=True
-                            print(Code, '-', 'AIY', id, db_AIY, AIY)
                         if  db_HIY is not HIY:
                             msql.UPDATE_(id, 'canlisonuclar', 'HIY', HIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HIY')
                             goal_=True
-                            print(Code, '-', 'HIY', id, db_HIY, HIY )
                         if  db_AMS is not AMS:
                             msql.UPDATE_(id, 'canlisonuclar', 'AMS', AMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AMS')
                             goal_=True
-                            print(Code, '-', 'AMS', id, db_AMS, AMS)
                         if  db_HMS is not HMS:
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-    Label(frame2,text='Canlı Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
+                            
+    Label(frame2,text='Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
             truefalse_goal = msql.gets('canlisonuclar', id)[-1]
@@ -125,6 +123,8 @@ def program():
                     Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 elif msql.gets('canlisonuclar', id)[9] == 'Başlamadı.':
                     Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                elif msql.gets('canlisonuclar', id)[9] == 'Ertelendi':
+                    Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 else:
                     Label(frame1,text=msql.gets('canlisonuclar', id)[1],bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)  
             if c is 1:
@@ -136,6 +136,8 @@ def program():
                     Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Devre Arası'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
                 elif msql.gets('canlisonuclar', id)[9] == 'Başlamadı.':
                     Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Başlamadı'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
+                elif msql.gets('canlisonuclar', id)[9] == 'Ertelendi':
+                    Label(frame1,text=msql.gets('canlisonuclar', id)[9],bg=color['background'],fg=color['Ertelendi'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                 else:
                     Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)
             if c is 4:
@@ -193,7 +195,7 @@ def program():
             goal()
     windows.geometry(str(windows.winfo_width()) +'x'+ str(windows.winfo_height()) + '-'+str(windows.winfo_screenwidth()/2-windows.winfo_width()+200) + '+0')
     windows.after(100000, program) #LOOP
-                           
+                            
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 windows = Tk()
 windows.attributes('-alpha', 0.8)
