@@ -114,7 +114,6 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-                            
     Label(frame2,text='nesine.com',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
@@ -160,16 +159,13 @@ def program():
                     if len(beta) is 0:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     else:
-                        Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                        
+                        Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 6:
                 Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 7:
                 Label(frame1, text= '-',   bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 8:
-                Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            
-            
+                Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
             if c is 9:
                 if truefalse_goal == 'AIY' or truefalse_goal == 'AMS': 
                     Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
@@ -181,9 +177,7 @@ def program():
                     if len(beta) is 0:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[3],   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     else:
-                        Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
-                        
-                        
+                        Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)                     
             if c is 10:
                 continue
                 beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
