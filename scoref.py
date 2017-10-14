@@ -114,7 +114,7 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
-    Label(frame2,text='Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
+    Label(frame2,text='Canlı Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
             truefalse_goal = msql.gets('canlisonuclar', id)[-1]
