@@ -2,12 +2,12 @@
 #!/usr/bin/env python
 from Tkinter import *
 import time, os, pygame, httplib, sys, msql, datetime, json
-#os.system('rm database.msql')
+os.system('rm /var/tmp/database.msql')
 try:
   import urllib.request as url
 except ImportError:
     import urllib
-msql.connect('database.msql')
+msql.connect('/var/tmp/database.msql')
 msql.execute('CREATE TABLE canlisonuclar (ID:id, Code:Int, DT:Text, ATTR:Text, HTTR:Text, AMS:Int, HMS:Int, AIY:Int, HIY:Int, STL:Text, STATE:Text, AG:Text, HG:Text)')
 date = str(datetime.datetime.now())[0:10].split('-')
 datenow = date[0] +'-'+ date[1] +'-'+ date[2]
