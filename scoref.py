@@ -2,12 +2,12 @@
 #!/usr/bin/env python
 from Tkinter import *
 import time, os, pygame, httplib, sys, msql, datetime, json
-os.system('rm /var/tmp/database.msql')
+#os.system('rm database.msql')
 try:
   import urllib.request as url
 except ImportError:
     import urllib
-msql.connect('/var/tmp/database.msql')
+msql.connect('database.msql')
 msql.execute('CREATE TABLE canlisonuclar (ID:id, Code:Int, DT:Text, ATTR:Text, HTTR:Text, AMS:Int, HMS:Int, AIY:Int, HIY:Int, STL:Text, STATE:Text, AG:Text, HG:Text)')
 date = str(datetime.datetime.now())[0:10].split('-')
 datenow = date[0] +'-'+ date[1] +'-'+ date[2]
@@ -36,8 +36,9 @@ def truefalse(code): #kayitlimi?
     else:
         return False
 def program():
+    print 'nesine'
     global goal_
-    goal_=0
+    goal_=False
     url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
     source = urllib.urlopen(url)
     data = json.load(source)
@@ -114,10 +115,10 @@ def program():
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
                             
-    Label(frame2,text='Maç Sonuçları',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
+    Label(frame2,text='nesine.com',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
-            truefalse_goal = msql.gets('canlisonuclar', id)[-1]
+            truefalse_goal = msql.gets('canlisonuclar', id)[10]
             if c is 2 and enabled['Code'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
                     Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id,column=c, sticky=W) 
@@ -148,9 +149,10 @@ def program():
                 for minute in test:
                     beta = beta +' '+ minute.split(':')[1]
                 Label(frame1,text=beta,bg=color['background'],fg=color['GM'], anchor=NW, justify=LEFT, font=('Verdana 6')).grid(row=id, column=c, sticky=W)
+                
             if c is 5:
                 if truefalse_goal == 'HIY' or truefalse_goal == 'HMS':
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'],fg=color['Goal'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
                     beta, test = '', msql.gets('canlisonuclar', id)[-1].split(',')[0:-1]
@@ -160,15 +162,18 @@ def program():
                         Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     else:
                         Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                        
             if c is 6:
                 Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 7:
                 Label(frame1, text= '-',   bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 8:
                 Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+            
+            
             if c is 9:
                 if truefalse_goal == 'AIY' or truefalse_goal == 'AMS': 
-                    Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg='yellow', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                    Label(frame1, text=msql.gets('canlisonuclar', id)[3] ,   bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     msql.UPDATE_(id, 'canlisonuclar', 'STATE', '')
                 else:
                     beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
@@ -178,6 +183,8 @@ def program():
                         Label(frame1, text=msql.gets('canlisonuclar', id)[3],   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     else:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                        
+                        
             if c is 10:
                 continue
                 beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
@@ -195,18 +202,17 @@ def program():
         windows.update()
         if goal_ is True: 
             goal()
-    windows.geometry(str(windows.winfo_width()) +'x'+ str(windows.winfo_height()) + '-'+str(windows.winfo_screenwidth()/2-windows.winfo_width()+250) + '+0')
-    windows.after(100000, program) #LOOP
+    windows.geometry( '{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
+    windows.after(60000, program) #LOOP
                             
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(1)
-frame1 = Frame(padx=10, pady=10, bg=color['background'] )
+windows.overrideredirect(0)
+frame1 = Frame(padx=10, pady=8, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'] )
 frame2.pack()
 program() #START
 windows.mainloop()
-
