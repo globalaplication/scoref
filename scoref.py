@@ -14,6 +14,7 @@ datenow = date[0] +'-'+ date[1] +'-'+ date[2]
 clock = str(datetime.datetime.now()).split(' ')[0:5]
 AMS, HMS = -1,-1
 AIY, HIY = -1,-1
+geometry = ['CENTER']
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'white',
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'gray', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
@@ -24,8 +25,10 @@ def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
     windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
-def right_geometry(event):
+    geometry.append('CENTER')
+def right_geometry(event): 
     windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , +30, +0))
+    geometry.append('RIGHT')
 def goal():
     windows.state("normal")
     pygame.init()
@@ -43,6 +46,7 @@ def truefalse(code): #kayitlimi?
     else:
         return False
 def program():
+    #print 'nesine.com'
     global goal_
     goal_=False
     url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
@@ -103,25 +107,26 @@ def program():
                         db_AMS, db_HMS = msql.gets('canlisonuclar', id)[5], msql.gets('canlisonuclar', id)[6] 
                         db_AIY, db_HIY = msql.gets('canlisonuclar', id)[7], msql.gets('canlisonuclar', id)[8]  
                         if  db_STL != STL:
+                            windows.state("normal")
                             msql.UPDATE_(id, 'canlisonuclar', 'STL', STL)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'STL')
                         if  db_AIY is not AIY:
-                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG']) #
+                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'AIY', AIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AIY')
                             goal_=True
                         if  db_HIY is not HIY:
-                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG']) #
+                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'HIY', HIY)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HIY')
                             goal_=True
                         if  db_AMS is not AMS:
-                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG']) #
+                            msql.UPDATE_(id, 'canlisonuclar', 'AG', string['AG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'AMS', AMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'AMS')
                             goal_=True
                         if  db_HMS is not HMS:
-                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])#
+                            msql.UPDATE_(id, 'canlisonuclar', 'HG', string['HG'])
                             msql.UPDATE_(id, 'canlisonuclar', 'HMS', HMS)
                             msql.UPDATE_(id, 'canlisonuclar', 'STATE', 'HMS')
                             goal_=True
@@ -134,7 +139,6 @@ def program():
               anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=3, sticky=W) 
         Label(frame0,text='Başlamadı',bg=color['background'],fg=color['Başlamadı'],
               anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=4, sticky=W) 
-        
     Label(frame2,text='',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
@@ -173,7 +177,7 @@ def program():
                     beta, test = '', msql.gets('canlisonuclar', id)[-1].split(',')[0:-1]
                     for minute in test:
                         beta = beta +' '+ minute.split(':')[1]
-                    if len(beta) is 0:
+                    if len(beta) < 2:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     else:
                         Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
@@ -191,7 +195,7 @@ def program():
                     beta, test = '', msql.gets('canlisonuclar', id)[-2].split(',')[0:-1]
                     for minute in test:
                         beta = beta +' '+ minute.split(':')[1]
-                    if len(beta) is 0:
+                    if len(beta) < 2:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[3],   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
                     else:
                         Label(frame1, text=msql.gets('canlisonuclar', id)[3] + str(' ('+beta+')') ,   bg=color['background'], fg=color['ATTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W)                     
@@ -221,14 +225,15 @@ def program():
               font=('Verdana 6'))
         right.bind('<Button-1>', right_geometry)
         right.grid(row=1, column=3, sticky=E)
-        windows.update()
         if goal_ is True: 
             goal()
-    windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
-    windows.after(60000, program) #LOOP
-                            
+        windows.update()
+    if geometry[-1] != 'CENTER':
+        windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , +30, +0))
+    else:
+        windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
+    windows.after(60000, program) #LOOP           
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
