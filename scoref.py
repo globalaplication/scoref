@@ -36,7 +36,6 @@ def truefalse(code): #kayitlimi?
     else:
         return False
 def program():
-    print 'nesine'
     global goal_
     goal_=False
     url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
@@ -202,7 +201,7 @@ def program():
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(0)
+windows.overrideredirect(1)
 frame1 = Frame(padx=10, pady=8, bg=color['background'] )
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'] )
