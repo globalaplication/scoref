@@ -22,8 +22,8 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'title_bg':'#1c1c1c', 'title_fg':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
            'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
-def lbl_click(event):
-    print 
+def live_soccer(event):
+    print 'http://www.xsportv2.com/canli.html'
 def exit_(event):
     print 'exit'
 def hide_command(event):
@@ -162,7 +162,7 @@ def program():
             if c is 5:
                 LBL_TV = Label(frame1,text=msql.gets('canlisonuclar',id)[11],bg=color['background'],fg=color['TV'],anchor=NW,justify=LEFT,font=('Verdana 5'))
                 LBL_TV.grid(row=id,column=c, sticky=W)
-                LBL_TV.bind('<Button-1>', lbl_click)
+                LBL_TV.bind('<Button-1>', live_soccer)
             if c is 2 and enabled['Code'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
                     LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id,column=c, sticky=W) 
