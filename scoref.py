@@ -15,17 +15,18 @@ clock = str(datetime.datetime.now()).split(' ')[0:5]
 AMS, HMS = -1,-1
 AIY, HIY = -1,-1
 geometry = ['CENTER']
-color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'white',
-         'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'gray', 'background':'black',
+color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'white', 
+         'IYSCORE':'white', 'MSSCORE':'white',
+         'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'gray', 'background':'black', 
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink', 'TV':'white',
          'ATTR':'gray', 'HTTR':'gray', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 
-         'title_bg':'#1c1c1c', 'title_fg':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
+         'title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
-           'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
-def live_soccer(event):
-    print 'http://www.xsportv2.com/canli.html'
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
 def exit_(event):
     print 'exit'
+def live_soccer(event):
+    print 'http://www.xsportv2.com/canli.html'
 def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
@@ -147,7 +148,7 @@ def program():
     title = Label(frame0,text=' Canlı Maç Sonuçları  ',bg=color['title_bg'],fg=color['title_fg'],
               anchor=E,justify=LEFT,font=('Verdana', 9, 'bold')).grid(row=1,column=3, sticky=E)
     frame0.update()
-    if enabled['STL'] is 10:
+    if enabled['STL'] is 1:
         Label(frame5, text='DA',bg=color['background'],fg=color['Devre Arası'], 
               anchor=E, justify=RIGHT, font=('Verdana 7')).grid(row=1, column=1, sticky=E) 
         Label(frame5, text='MS',bg=color['background'],fg=color['Maç Sonucu'], 
@@ -159,7 +160,7 @@ def program():
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 16):
             truefalse_goal = msql.gets('canlisonuclar', id)[10]
-            if c is 5:
+            if c is 5 and enabled['TV'] is 1:
                 LBL_TV = Label(frame1,text=msql.gets('canlisonuclar',id)[11],bg=color['background'],fg=color['TV'],anchor=NW,justify=LEFT,font=('Verdana 5'))
                 LBL_TV.grid(row=id,column=c, sticky=W)
                 LBL_TV.bind('<Button-1>', live_soccer)
@@ -202,11 +203,11 @@ def program():
                     else:
                         LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 7:
-                LBL_SCORE_HMS = Label(frame1, text=msql.gets('canlisonuclar', id)[6],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_HMS = Label(frame1, text=msql.gets('canlisonuclar', id)[6],bg=color['background'], fg=color['MSSCORE'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 8:
                 Label(frame1, text= '-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 9:
-                LBL_SCORE_AMS = Label(frame1, text=msql.gets('canlisonuclar', id)[5],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
+                LBL_SCORE_AMS = Label(frame1, text=msql.gets('canlisonuclar', id)[5],bg=color['background'], fg=color['MSSCORE'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
             if c is 10:
                 if truefalse_goal == 'AIY' or truefalse_goal == 'AMS': 
                     LBL_ATTR = Label(frame1, text=msql.gets('canlisonuclar', id)[3],bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
@@ -228,21 +229,21 @@ def program():
             if c is 12 and enabled['IY'] is 1:
                 LBL_AIY = Label(frame1, text='  IY',bg=color['background'],fg=color['IYLABEL'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 13 and enabled['IY'] is 1:
-                LBL_SCORE_HIY = Label(frame1,text=msql.gets('canlisonuclar', id)[8],bg=color['background'],fg='white',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_HIY = Label(frame1,text=msql.gets('canlisonuclar', id)[8],bg=color['background'],fg=color['IYSCORE'],anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 14 and enabled['IY'] is 1:
                 Label(frame1,text='-',bg=color['background'], fg='gray',anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 15 and enabled['IY'] is 1:
-                LBL_SCORE_AIY = Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_AIY = Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg=color['IYSCORE'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
     frame1.update()
-    hide = Label(frame3, text=' HIDE ',bg=color['background'],fg='orange', anchor=E, justify=LEFT, 
+    hide = Label(frame3, text=' HIDE ',bg=color['background'],fg=color['hide'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
     hide.bind('<Button-1>', hide_command)
     hide.grid(row=1, column=1, sticky=E)
-    center =Label(frame3, text=' C ',bg=color['background'],fg='gray', anchor=E, justify=LEFT, 
+    center =Label(frame3, text=' C ',bg=color['background'],fg=color['C'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
     center.bind('<Button-1>', center_geometry)
     center.grid(row=1, column=2, sticky=E)
-    right = Label(frame3, text=' R ',bg=color['background'],fg='gray', anchor=E, justify=LEFT, 
+    right = Label(frame3, text=' R ',bg=color['background'],fg=color['R'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
     right.bind('<Button-1>', right_geometry)
     right.grid(row=1, column=3, sticky=E)
