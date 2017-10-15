@@ -22,10 +22,10 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'title_bg':'#1c1c1c', 'title_fg':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
            'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
-def exit_(event):
-    print 'exit'
 def lbl_click(event):
     print 
+def exit_(event):
+    print 'exit'
 def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
