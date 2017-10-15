@@ -64,13 +64,13 @@ def program():
         if str(Code) in sys.argv[1:]:
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
-                    print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
+                    #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['TS'] is 1:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
-                            HG = HG + str(SCORE['P']+':'+SCORE['M']+',')
+                            HG = HG + str(SCORE['P'].encode('Utf-8')+':'+SCORE['M'].encode('Utf-8')+',')
                     if SCORE['TS'] is 2:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
-                            AG = AG + str(SCORE['P']+':'+SCORE['M']+',')
+                            AG = AG + str(SCORE['P'].encode('Utf-8')+':'+SCORE['M'].encode('Utf-8')+',')
             if len(T) is 0: #Başlamayan maçlar
                 AIY = -1
                 HIY = -1
@@ -213,6 +213,7 @@ def program():
                 Label(frame1,text='-',bg=color['background'], fg='gray',anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 14 and enabled['IY'] is 1:
                 LBL_SCORE_AIY = Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+        frame1.update()
     hide = Label(frame3, text=' HIDE ',bg=color['background'],fg='orange', anchor=E, justify=LEFT, 
             font=('Verdana 6'))
     hide.bind('<Button-1>', hide_command)
@@ -225,25 +226,23 @@ def program():
             font=('Verdana 6'))
     right.bind('<Button-1>', right_geometry)
     right.grid(row=1, column=3, sticky=E)
-    windows.update()
     if goal_ is True:
         goal()
     if geometry[-1] != 'CENTER':
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , +30, +0))
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+20), str(windows.winfo_height()) , +30, +0))
     else:
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
-    windows.geometry('{}x{}'.format(str(frame1.winfo_width()), str(windows.winfo_height())))
-    windows.after(60000, program) #LOOP   
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+20), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+    windows.after(60000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
-windows.overrideredirect(1) #0
+windows.overrideredirect(1)
 frame0 = Frame(padx=5, pady=5, bg=color['background'])
 frame0.pack()
 frame1 = Frame(padx=10, pady=10, bg=color['background'])
 frame1.pack()
 frame2 = Frame(padx=1, pady=2, bg=color['background'])
-#frame2.pack()
+frame2.pack()
 frame3 = Frame(padx=10, pady=10, bg=color['background'])
 frame3.pack(side=RIGHT)
 program() #START
