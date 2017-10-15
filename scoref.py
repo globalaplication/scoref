@@ -64,7 +64,7 @@ def program():
         if str(Code) in sys.argv[1:]:
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
-                    #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
+                    print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['TS'] is 1:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             HG = HG + str(SCORE['P'].encode('Utf-8')+':'+SCORE['M'].encode('Utf-8')+',')
@@ -226,12 +226,13 @@ def program():
             font=('Verdana 6'))
     right.bind('<Button-1>', right_geometry)
     right.grid(row=1, column=3, sticky=E)
+    frame3.update()
     if goal_ is True:
         goal()
     if geometry[-1] != 'CENTER':
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+20), str(windows.winfo_height()) , +30, +0))
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+20), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
     windows.after(60000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
