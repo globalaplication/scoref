@@ -20,9 +20,9 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'gray', 'background':'black', 
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink', 'TV':'white',
          'ATTR':'gray', 'HTTR':'gray', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 
-         'title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
+         'title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} # color font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
-           'HTTR':1, 'MS':1, 'IY':1, 'TV':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG TV} için uygulanabilir.
 def exit_(event):
     print 'exit'
 def live_soccer(event):
