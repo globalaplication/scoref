@@ -71,7 +71,6 @@ def program():
         if len(STL) == 0 : STL = 'Oynaniyor'
         T = data['result'][OnlineIddaa]['ES']
         if str(Code) in sys.argv[1:]:
-            print TV
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
                     if SCORE['TS'] is 1:
