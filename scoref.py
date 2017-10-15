@@ -18,16 +18,16 @@ geometry = ['CENTER']
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'white',
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'gray', 'background':'black',
          'Oynanıyor':'green', 'Saat':'white', 'GM':'orange', 'Ertelendi':'pink',
-         'ATTR':'gray', 'HTTR':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
+         'ATTR':'gray', 'HTTR':'gray', 'wraplength':600} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
            'HTTR':1, 'MS':1, 'IY':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG} için uygulanabilir.
 def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
-    windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
+    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
     geometry.append('CENTER')
 def right_geometry(event): 
-    windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , +30, +0))
+    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , +30, +0))
     geometry.append('RIGHT')
 def goal():
     windows.state("normal")
@@ -46,7 +46,6 @@ def truefalse(code): #kayitlimi?
     else:
         return False
 def program():
-    #print 'nesine.com'
     global goal_
     goal_=False
     url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
@@ -65,7 +64,7 @@ def program():
         if str(Code) in sys.argv[1:]:
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
-                    #print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
+                    print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['TS'] is 1:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             HG = HG + str(SCORE['P']+':'+SCORE['M']+',')
@@ -179,15 +178,15 @@ def program():
                     for minute in test:
                         beta = beta +' '+ minute.split(':')[1]
                     if len(beta) < 2:
-                        LBL_HTTR = Label(frame1, text=msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                        LBL_HTTR = Label(frame1, text=msql.gets('canlisonuclar', id)[4],bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     else:
-                        LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],   bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
+                        LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 6:
-                LBL_SCORE_HMS = Label(frame1, text=msql.gets('canlisonuclar', id)[6],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                LBL_SCORE_HMS = Label(frame1, text=msql.gets('canlisonuclar', id)[6],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 7:
-                Label(frame1, text= '-',   bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                Label(frame1, text= '-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 8:
-                LBL_SCORE_AMS = Label(frame1, text=msql.gets('canlisonuclar', id)[5],   bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
+                LBL_SCORE_AMS = Label(frame1, text=msql.gets('canlisonuclar', id)[5],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)         
             if c is 9:
                 if truefalse_goal == 'AIY' or truefalse_goal == 'AMS': 
                     LBL_ATTR = Label(frame1, text=msql.gets('canlisonuclar', id)[3],bg=color['background'], fg=color['Goal'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
@@ -214,8 +213,6 @@ def program():
                 Label(frame1,text='-',bg=color['background'], fg='gray',anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 14 and enabled['IY'] is 1:
                 LBL_SCORE_AIY = Label(frame1, text=msql.gets('canlisonuclar', id)[7],bg=color['background'], fg='white', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            #windows.update()
-            #windows.update_idletasks()
     hide = Label(frame3, text=' HIDE ',bg=color['background'],fg='orange', anchor=E, justify=LEFT, 
             font=('Verdana 6'))
     hide.bind('<Button-1>', hide_command)
@@ -229,16 +226,14 @@ def program():
     right.bind('<Button-1>', right_geometry)
     right.grid(row=1, column=3, sticky=E)
     windows.update()
-    windows.update_idletasks()
     if goal_ is True:
         goal()
     if geometry[-1] != 'CENTER':
-        windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , +30, +0))
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , +30, +0))
     else:
-        windows.geometry('{}x{}-{}+{}'.format(str(windows.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-windows.winfo_width()/2, 0))
-    windows.after(60000, program) #LOOP
-                            
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+    windows.geometry('{}x{}'.format(str(frame1.winfo_width()), str(windows.winfo_height())))
+    windows.after(60000, program) #LOOP   
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
@@ -251,6 +246,5 @@ frame2 = Frame(padx=1, pady=2, bg=color['background'])
 #frame2.pack()
 frame3 = Frame(padx=10, pady=10, bg=color['background'])
 frame3.pack(side=RIGHT)
-windows.update()
 program() #START
 windows.mainloop()
