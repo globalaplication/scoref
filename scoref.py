@@ -64,7 +64,6 @@ def program():
         if str(Code) in sys.argv[1:]:
             if len(GOALS) is not 0:
                 for SCORE in GOALS:
-                    print Code, SCORE['PIN'], SCORE['TS'], SCORE['T'], SCORE['P'], SCORE['M']
                     if SCORE['TS'] is 1:
                         if SCORE['T'] is 1 or SCORE['T'] is 4 or SCORE['T'] is 2 or SCORE['T'] is 3:
                             HG = HG + str(SCORE['P'].encode('Utf-8')+':'+SCORE['M'].encode('Utf-8')+',')
@@ -139,7 +138,6 @@ def program():
               anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=3, sticky=W) 
         Label(frame0,text='Başlamadı',bg=color['background'],fg=color['Başlamadı'],
               anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=4, sticky=W) 
-    Label(frame2,text='',bg=color['background'],fg='yellow',anchor=NW,justify=LEFT,font=(color['Font'])).grid(row=1,column=1, sticky=W) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
         for c in range(1, 15):
             truefalse_goal = msql.gets('canlisonuclar', id)[10]
@@ -242,8 +240,6 @@ frame0 = Frame(padx=5, pady=5, bg=color['background'])
 frame0.pack()
 frame1 = Frame(padx=10, pady=10, bg=color['background'])
 frame1.pack()
-frame2 = Frame(padx=1, pady=2, bg=color['background'])
-frame2.pack()
 frame3 = Frame(padx=10, pady=10, bg=color['background'])
 frame3.pack(side=RIGHT)
 program() #START
