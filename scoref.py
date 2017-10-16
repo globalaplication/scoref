@@ -227,7 +227,7 @@ def program():
                     else:
                         LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 7:
-                if msql.gets('canlisonuclar', id)[6] is -1 or db_DEVRE is 1:
+                if msql.gets('canlisonuclar', id)[6] is -1: #or db_DEVRE is 1
                     beta = '' 
                 else: 
                     beta = msql.gets('canlisonuclar', id)[6]
@@ -236,7 +236,7 @@ def program():
             if c is 8:
                 Label(frame1, text= '-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 9:
-                if msql.gets('canlisonuclar', id)[5] is -1 or db_DEVRE is 1:
+                if msql.gets('canlisonuclar', id)[5] is -1: #or db_DEVRE is 1
                     beta = '' 
                 else: 
                     beta = msql.gets('canlisonuclar', id)[5]
