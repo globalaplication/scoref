@@ -281,11 +281,9 @@ def program():
                     beta = msql.gets('canlisonuclar', id)[7]
                 LBL_SCORE_AIY = Label(frame1, text=beta,bg=color['background'], fg=color['IYSCORE'], anchor=NW, justify=LEFT, 
                                       font=(color['Font'])).grid(row=id, column=c, sticky=E) 
-            
             if c is 16 and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 Label(frame1,text='   ', bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, 
                       font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                
             if c is 17 and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS > AMS and db_DEVRE is 2:
                     LBL_MS_1 = Label(frame1,text='MS 1',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
@@ -293,7 +291,6 @@ def program():
                 elif HMS > AMS and db_DEVRE is 1:
                     LBL_MS_1 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                    
             if c is 17  and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS is AMS and db_DEVRE is 2:
                     LBL_MS_0 = Label(frame1,text='MS 0',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
@@ -301,7 +298,6 @@ def program():
                 elif HMS is AMS and db_DEVRE is 1:
                     LBL_MS_0 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                
             if c is 17 and ( HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS < AMS and db_DEVRE is 2:
                     LBL_MS_2 = Label(frame1,text='MS 2',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
@@ -309,8 +305,6 @@ def program():
                 elif HMS < AMS and db_DEVRE is 1: 
                     LBL_MS_2 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                    
-                    
             if c is 18 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
                 Label(frame1,bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 19 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
@@ -325,10 +319,8 @@ def program():
                 if HIY < AIY:
                     LBL_IY_2 = Label(frame1,text='IY 2',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                    
             if c is 20 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
                 Label(frame1,bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                
             if c is 21 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
                 if db_DEVRE is 1:
                     LBL_TG = Label(frame1,text='TG '+str(TG),bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
@@ -336,7 +328,6 @@ def program():
                 else:
                     LBL_TG = Label(frame1,text='TG '+str(TG),bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                    
     frame1.update()
     hide = Label(frame3, text=' HIDE ',bg=color['background'],fg=color['hide'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
