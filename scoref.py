@@ -20,7 +20,7 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'DIMGRAY', 'background':'black','Oynanıyor':'green', 'Saat':'FLORALWHITE', 
          'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'FLORALWHITE','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
-           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE} için uygulanabilir.
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':1, '3.5':0, 'TG':0} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
 def exit_(event):
     windows.destroy()
 def live_soccer(event):
@@ -38,7 +38,7 @@ def goal():
     pygame.init()
     pygame.mixer.music.load('golsesi.ogg')
     pygame.mixer.music.play()
-def truefalse(code): #kayitlimi?
+def truefalse(code):
     code = int(code)
     codetf = []
     for canlisonuclar in range(1, msql.count('canlisonuclar')+1, +1):
@@ -68,6 +68,7 @@ def program():
         else: TV = '(TV)'
         if len(STL) == 0 : STL = 'Oynaniyor'
         T = data['result'][OnlineIddaa]['ES']
+        print sys.argv[1:]
         if str(Code) in sys.argv[1:]:
             if len(T) is 1:
                 DEVRE = 1
@@ -159,7 +160,7 @@ def program():
         Label(frame5, text='BSL',bg=color['background'],fg=color['Başlamadı'], 
               anchor=E, justify=RIGHT, font=('Verdana 7')).grid(row=1, column=4, sticky=E) 
     for id in range(1, msql.count('canlisonuclar')+1, +1):
-        for c in range(1, 22):
+        for c in range(1, 26):
             truefalse_goal = msql.gets('canlisonuclar', id)[10]
             HMS, AMS = msql.gets('canlisonuclar', id)[6], msql.gets('canlisonuclar', id)[5]
             HIY, AIY = msql.gets('canlisonuclar', id)[8], msql.gets('canlisonuclar', id)[7]
@@ -228,16 +229,16 @@ def program():
                         LBL_HTTR = Label(frame1, text=str('('+beta+') ')+msql.gets('canlisonuclar', id)[4],bg=color['background'], fg=color['HTTR'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)      
             if c is 7:
                 if msql.gets('canlisonuclar', id)[6] is -1: #or db_DEVRE is 1
-                    beta = '' 
+                    beta = '-' 
                 else: 
                     beta = msql.gets('canlisonuclar', id)[6]
                 LBL_SCORE_HMS = Label(frame1, text=beta,bg=color['background'], fg=color['MSSCORE'], anchor=NW, justify=LEFT, 
                                       font=(color['Font'])).grid(row=id, column=c, sticky=E) 
             if c is 8:
-                Label(frame1, text= '-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
+                Label(frame1,text= '-',bg=color['background'], fg='gray', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=W) 
             if c is 9:
                 if msql.gets('canlisonuclar', id)[5] is -1: #or db_DEVRE is 1
-                    beta = '' 
+                    beta = '-' 
                 else: 
                     beta = msql.gets('canlisonuclar', id)[5]
                 LBL_SCORE_AMS = Label(frame1, text=beta,bg=color['background'], fg=color['MSSCORE'], anchor=NW, justify=LEFT, 
@@ -279,34 +280,36 @@ def program():
                     beta = '-' 
                 else: 
                     beta = msql.gets('canlisonuclar', id)[7]
-                LBL_SCORE_AIY = Label(frame1, text=beta,bg=color['background'], fg=color['IYSCORE'], anchor=NW, justify=LEFT, 
+                LBL_SCORE_AIY = Label(frame1,text=beta,bg=color['background'], fg=color['IYSCORE'], anchor=NW, justify=LEFT, 
                                       font=(color['Font'])).grid(row=id, column=c, sticky=E) 
+                
             if c is 16 and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
-                Label(frame1,text='   ', bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, 
-                      font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                LBL_SPACE = Label(frame1,text='   ', bg=color['background'], anchor=NW, justify=LEFT, 
+                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 17 and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS > AMS and db_DEVRE is 2:
                     LBL_MS_1 = Label(frame1,text='MS 1',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS > AMS and db_DEVRE is 1:
-                    LBL_MS_1 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_1 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 17  and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS is AMS and db_DEVRE is 2:
                     LBL_MS_0 = Label(frame1,text='MS 0',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS is AMS and db_DEVRE is 1:
-                    LBL_MS_0 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_0 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 17 and ( HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS < AMS and db_DEVRE is 2:
                     LBL_MS_2 = Label(frame1,text='MS 2',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS < AMS and db_DEVRE is 1: 
-                    LBL_MS_2 = Label(frame1,text='         ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_2 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    
             if c is 18 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
-                Label(frame1,bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                LBL_SPACE = Label(frame1,bg=color['background'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 19 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
                 if HIY > AIY:
                     LBL_IY_1 = Label(frame1,text='IY 1',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
@@ -319,17 +322,48 @@ def program():
                 if HIY < AIY:
                     LBL_IY_2 = Label(frame1,text='IY 2',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
-            if c is 20 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
-                Label(frame1,bg=color['background'], fg='DIMGRAY', anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
-            if c is 21 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                    
+            if c is 20 and enabled['2.5'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                LBL_SPACE = Label(frame1,bg=color['background'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+            if c is 21 and enabled['2.5'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                if db_DEVRE is 1 and TG < 3:
+                    LBL_2_5_ALT = Label(frame1,text='2.5 A',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 1 and TG > 2:
+                    LBL_2_5_UST = Label(frame1,text='2.5 U',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 2 and TG < 3:
+                    LBL_2_5_ALT = Label(frame1,text='2.5 A',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 2 and TG > 2:
+                    LBL_2_5_UST = Label(frame1,text='2.5 U',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    
+            if c is 22 and enabled['3.5'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                LBL_SPACE = Label(frame1,bg=color['background'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+            if c is 23 and enabled['3.5'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                if db_DEVRE is 1 and TG < 4:
+                    LBL_2_5_ALT = Label(frame1,text='3.5 A',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 1 and TG > 3:
+                    LBL_2_5_UST = Label(frame1,text='3.5 U',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 2 and TG < 4:
+                    LBL_2_5_ALT = Label(frame1,text='3.5 A',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                if db_DEVRE is 2 and TG > 3:
+                    LBL_2_5_UST = Label(frame1,text='3.5 U',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    
+            if c is 24 and enabled['TG'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
+                LBL_SPACE = Label(frame1,bg=color['background'], anchor=NW, justify=LEFT, font=(color['Font'])).grid(row=id, column=c, sticky=E)
+            if c is 25 and enabled['TG'] is 1 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
                 if db_DEVRE is 1:
-                    LBL_TG = Label(frame1,text='TG '+str(TG),bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_TG = Label(frame1,text='TG '+str(TG)+' ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 else:
-                    LBL_TG = Label(frame1,text='TG '+str(TG),bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_TG = Label(frame1,text='TG '+str(TG)+' ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
-                    
-      
     frame1.update()
     hide = Label(frame3, text=' HIDE ',bg=color['background'],fg=color['hide'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
@@ -355,7 +389,7 @@ windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
 windows.overrideredirect(1)
-frame0 = Frame(padx=3, pady=1, bg='black')
+frame0 = Frame(padx=3, pady=1, bg=color['background'])
 frame0.pack(fill=X)
 frame1 = Frame(padx=10, pady=10, bg=color['background'])
 frame1.pack()
