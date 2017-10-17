@@ -68,7 +68,6 @@ def program():
         else: TV = '(TV)'
         if len(STL) == 0 : STL = 'Oynaniyor'
         T = data['result'][OnlineIddaa]['ES']
-        print sys.argv[1:]
         if str(Code) in sys.argv[1:]:
             if len(T) is 1:
                 DEVRE = 1
