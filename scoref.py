@@ -17,18 +17,18 @@ AMS, HMS = -1,-1
 AIY, HIY = -1,-1
 geometry = ['CENTER']
 color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'white', 'IYSCORE':'white', 'MSSCORE':'white',
-         'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'DIMGRAY', 'background':'black','Oynanıyor':'green', 'Saat':'white', 
-         'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'white','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
+         'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'DIMGRAY', 'background':'black','Oynanıyor':'green', 'Saat':'FLORALWHITE', 
+         'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'FLORALWHITE','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
            'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE} için uygulanabilir.
 def exit_(event):
-    print 'exit'
+    windows.destroy()
 def live_soccer(event):
     print 'http://www.xsportv2.com/canli.html'
 def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
-    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-(frame1.winfo_width()+10)/2, 0))
     geometry.append('CENTER')
 def right_geometry(event): 
     windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
@@ -146,8 +146,8 @@ def program():
     exit.bind('<Button-1>', exit_)
     Label(frame0,bg=color['background'],fg=color['title_fg'],
               anchor=E,justify=LEFT,font=('Verdana', 9, 'bold')).grid(row=1,column=2, sticky=E)
-    title = Label(frame0,text=' Canlı Maç Sonuçları  ',bg=color['title_bg'],fg=color['title_fg'],
-              anchor=E,justify=LEFT,font=('Verdana', 9, 'bold')).grid(row=1,column=3, sticky=E)
+    title = Label(frame0,text='Canlı Maç Sonuçları  ',bg=color['title_bg'],fg=color['title_fg'],
+              anchor=E,justify=LEFT,font=('Ubuntu', 9, 'bold')).grid(row=1,column=3, sticky=E)
     frame0.update()
     if enabled['STL'] is 1:
         Label(frame5, text='DA',bg=color['background'],fg=color['Devre Arası'], 
@@ -174,7 +174,7 @@ def program():
                 LBL_TV = Label(frame1,text=msql.gets('canlisonuclar',id)[11],bg=color['background'],fg=color['TV'],anchor=NW,justify=LEFT,font=('Verdana 5'))
                 LBL_TV.grid(row=id,column=c, sticky=W)
                 LBL_TV.bind('<Button-1>', live_soccer)
-            if c is 2 and enabled['Code'] is 1:
+            if c is 4 and enabled['Code'] is 1:
                 if msql.gets('canlisonuclar', id)[9] == 'Maç Sonucu':
                     LBL_CODE = Label(frame1,text=msql.gets('canlisonuclar',id)[1],bg=color['background'],fg=color['Maç Sonucu'],anchor=NW,justify=LEFT,
                                      font=(color['Font'])).grid(row=id,column=c, sticky=W) 
@@ -209,7 +209,7 @@ def program():
                 else:
                     LBL_STL = Label(frame1,text=msql.gets('canlisonuclar', id)[9] + ' ',bg=color['background'],fg=color['Oynanıyor'], anchor=NW, justify=LEFT, 
                                     font=(color['Font'])).grid(row=id, column=c, sticky=W)
-            if c is 4 and enabled['LIG'] is 1:
+            if c is 2 and enabled['LIG'] is 1:
                 LBL_LIG = Label(frame1,text=msql.gets('canlisonuclar', id)[12],bg=color['background'],fg=color['Lig'], anchor=NW, justify=LEFT, 
                                 font=(color['Font'])).grid(row=id, column=c, sticky=W)
             if c is 6:
@@ -328,6 +328,8 @@ def program():
                 else:
                     LBL_TG = Label(frame1,text='TG '+str(TG),bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                 font=(color['Font'])).grid(row=id, column=c, sticky=E)
+                    
+      
     frame1.update()
     hide = Label(frame3, text=' HIDE ',bg=color['background'],fg=color['hide'], anchor=E, justify=LEFT, 
             font=('Verdana 6'))
@@ -347,7 +349,7 @@ def program():
     if geometry[-1] != 'CENTER':
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-(frame1.winfo_width()+10)/2, 0))
     windows.after(60000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
