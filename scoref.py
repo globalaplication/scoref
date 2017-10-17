@@ -383,7 +383,7 @@ def program():
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
-    windows.after(90000, program) #LOOP
+    windows.after(60000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
