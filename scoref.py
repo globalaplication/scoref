@@ -290,21 +290,21 @@ def program():
                     LBL_MS_1 = Label(frame1,text='MS 1',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS > AMS and db_DEVRE is 1:
-                    LBL_MS_1 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_1 = Label(frame1,text='    .    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 17  and (HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS is AMS and db_DEVRE is 2:
                     LBL_MS_0 = Label(frame1,text='MS 0',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS is AMS and db_DEVRE is 1:
-                    LBL_MS_0 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_0 = Label(frame1,text='    .    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
             if c is 17 and ( HMS is not -1 and AMS is not -1) and enabled['STATE'] is True:
                 if HMS < AMS and db_DEVRE is 2:
                     LBL_MS_2 = Label(frame1,text='MS 2',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                 elif HMS < AMS and db_DEVRE is 1: 
-                    LBL_MS_2 = Label(frame1,text='    -    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
+                    LBL_MS_2 = Label(frame1,text='    .    ',bg=color['select_bg'], fg=color['select_fg'], anchor=NW, justify=LEFT, 
                                  font=(color['Font'])).grid(row=id, column=c, sticky=E)
                     
             if c is 18 and (HIY is not -1 and AIY is not -1) and enabled['STATE'] is True:
@@ -383,7 +383,7 @@ def program():
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
-    windows.after(90000, program) #LOOP
+    windows.after(60000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
