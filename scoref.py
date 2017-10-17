@@ -20,7 +20,7 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'DIMGRAY', 'background':'black','Oynanıyor':'green', 'Saat':'FLORALWHITE', 
          'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'FLORALWHITE','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
-           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':1, '3.5':0, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':1, '3.5':1, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
 def exit_(event):
     windows.destroy()
 def live_soccer(event):
@@ -28,7 +28,7 @@ def live_soccer(event):
 def hide_command(event):
     windows.state("withdrawn")
 def center_geometry(event):
-    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-(frame1.winfo_width()+10)/2, 0))
+    windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
     geometry.append('CENTER')
 def right_geometry(event): 
     windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
@@ -382,8 +382,8 @@ def program():
     if geometry[-1] != 'CENTER':
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
-        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-(frame1.winfo_width()+10)/2, 0))
-    windows.after(60000, program) #LOOP
+        windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
+    windows.after(90000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
