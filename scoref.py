@@ -2,10 +2,10 @@
 #!/usr/bin/env python
 #https://i.hizliresim.com/zJn7PB.png
 from Tkinter import *
-import time, os, pygame, httplib, sys, msql, datetime, json
+import time, os, pygame, sys, msql, datetime, json
 os.system('rm /var/tmp/database.msql')
 try:
-  import urllib.request as url
+  import requests
 except ImportError:
     import urllib
 msql.connect('/var/tmp/database.msql')
@@ -20,8 +20,8 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'Devre Arası':'yellow', 'Başlamadı':'brown', 'IYLABEL':'DIMGRAY', 'background':'black','Oynanıyor':'green', 'Saat':'FLORALWHITE', 
          'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'FLORALWHITE','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} 
             #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
-enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0,
-           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':1, '3.5':1, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
+enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0, 'title':True,
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':0, '3.5':0, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
 def exit_(event):
     windows.destroy()
 def live_soccer(event):
@@ -53,9 +53,14 @@ def truefalse(code):
 def program():
     global goal_
     goal_=False
-    url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
-    source = urllib.urlopen(url)
-    data = json.load(source)
+    try:
+        url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
+        source = urllib.urlopen(url)
+        data = json.load(source)
+    except:
+        url = 'https://www.nesine.com/iddaa/IddaaResultsData?BetType=1&OnlyLive=0&Date='+datenow+'&League=&FilterType=init'
+        source = requests.get(url=url)
+        data = source.json()
     for OnlineIddaa in range(0, len(data['result']), +1):
         Code, DT = int(data['result'][OnlineIddaa]['C']), str(data['result'][OnlineIddaa]['DT'])
         HTTR, ATTR = str(data['result'][OnlineIddaa]['HTTR'].encode('Utf-8')), str(data['result'][OnlineIddaa]['ATTR'].encode('Utf-8'))
@@ -147,8 +152,9 @@ def program():
     exit.bind('<Button-1>', exit_)
     Label(frame0,bg=color['background'],fg=color['title_fg'],
               anchor=E,justify=LEFT,font=('Verdana', 9, 'bold')).grid(row=1,column=2, sticky=E)
-    title = Label(frame0,text='Canlı Maç Sonuçları  ',bg=color['title_bg'],fg=color['title_fg'],
-              anchor=E,justify=LEFT,font=('Ubuntu', 9, 'bold')).grid(row=1,column=3, sticky=E)
+    if enabled['title'] is True:
+        title = Label(frame0,text='Canlı Maç Sonuçları  ',bg=color['title_bg'],fg=color['title_fg'],
+                anchor=E,justify=LEFT,font=('Ubuntu', 9, 'bold')).grid(row=1,column=3, sticky=E)
     frame0.update()
     if enabled['STL'] is 1:
         Label(frame5, text='DA',bg=color['background'],fg=color['Devre Arası'], 
@@ -384,7 +390,7 @@ def program():
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , +30, +0))
     else:
         windows.geometry('{}x{}-{}+{}'.format(str(frame1.winfo_width()+10), str(windows.winfo_height()) , windows.winfo_screenwidth()/2-frame1.winfo_width()/2, 0))
-    windows.after(60000, program) #LOOP
+    windows.after(90000, program) #LOOP
 windows = Tk()
 windows.attributes('-alpha', 0.8)
 windows.configure(background=color['background'])
