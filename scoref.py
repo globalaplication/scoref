@@ -21,7 +21,7 @@ color = {'Goal':'LIMEGREEN', 'Font':'Ubuntu 9', 'Maç Sonucu':'red', 'Lig':'whit
          'GM':'orange', 'Ertelendi':'pink', 'TV':'white','ATTR':'DIMGRAY', 'HTTR':'DIMGRAY', 'exit_bg':'#1c1c1c', 'exit_fg':'gray', 'select_bg':'FLORALWHITE','select_fg':'black','title_bg':'#1c1c1c', 'title_fg':'gray', 'hide':'orange', 'C':'gray', 'R':'gray'} 
             #Renk font size değerlerini değiştirerek uygulamayı özelleştirebilirsin.
 enabled = {'Saat':1, 'Code':1, 'STL':0, 'ATTR':1, 'LIG':0, 'title':True,
-           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':0, '3.5':0, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
+           'HTTR':1, 'MS':1, 'IY':1, 'TV':1, 'STATE':True, '2.5':1, '3.5':0, 'TG':1} # Eğer etiketi ekranda görmek istemiyorsan değerini {0} yapmalısın. Bu özellik {Saat Code STL IY LIG STATE 2.5 3.5 TG} için uygulanabilir.
 def exit_(event):
     windows.destroy()
 def live_soccer(event):
