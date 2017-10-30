@@ -1,1 +1,1 @@
-Terminal: sudo chmod +777 setup.sh <br> ./setup.sh
+Terminal: sudo chmod +777 setup.sh <br> Run:./setup.sh
